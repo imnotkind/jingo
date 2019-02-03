@@ -1,5 +1,6 @@
 /* global Git */
 var router = require('express').Router()
+var app = require("../lib/app").getInstance()
 var renderer = require('../lib/renderer')
 var fs = require('fs')
 var models = require('../lib/models')
@@ -9,9 +10,24 @@ models.use(Git)
 router.get('/misc/syntax-reference', _getSyntaxReference)
 router.post('/misc/preview', _postPreview)
 router.get('/misc/existence', _getExistence)
+router.get("/misc/upload", _getUploadForm);
 
 function _getSyntaxReference (req, res) {
   res.render('syntax')
+}
+
+function _getUploadForm(req, res) {
+  if (!res.locals.user) {
+    res.render("404", {
+      title: 'Modules'
+    });
+    return;
+  }
+
+  res.render("upload", {
+    config: app.locals.config.get("application").repository,
+    message: 'Ready to upload.'
+  });
 }
 
 function _postPreview (req, res) {

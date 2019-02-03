@@ -59,6 +59,7 @@ mixin featuresStylesheets()
   +asset("/vendor/codemirror/fullscreen.css")(type="text/css")
 
 mixin featuresJavaScripts()
+  +asset("/vendor/jquery.form.min.js")
   +asset("/vendor/codemirror/codemirror.min.js")
   script.
     Jingo.cmInstance = CodeMirror.fromTextArea(document.getElementById('js--editor'), {
